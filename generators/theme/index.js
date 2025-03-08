@@ -93,12 +93,8 @@ module.exports = class extends Generator {
       this.templatePath("source"),
       this.destinationPath(this.rootPath),
       opts,
-      copyOpts
-    );
-
-    this.fs.copy(
-      this.templatePath("source/.*"),
-      this.destinationPath(this.rootPath)
+      copyOpts,
+      { globOptions: { dot: true } }
     );
 
     this.success = true;

@@ -1,6 +1,6 @@
 {
   "name": "generator-liferay",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Liferay generator",
   "homepage": "https://github.com/maratib/generator-liferay",
   "author": {
@@ -76,7 +76,7 @@
   "scripts": {
     "pretest": "eslint .",
     "test": "jest",
-    "publish": "npm publish --access public"
+    "pub": "npm publish --access public"
   },
   "repository": {
     "type": "git",
