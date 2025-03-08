@@ -76,8 +76,7 @@ module.exports = class extends Generator {
     // The ignore array is used to ignore files, push file names into this array that you want to ignore.
     const copyOpts = {
       globOptions: {
-        ignore: [],
-        dot: true
+        ignore: []
       }
     };
 
@@ -95,6 +94,11 @@ module.exports = class extends Generator {
       this.destinationPath(this.rootPath),
       opts,
       copyOpts
+    );
+
+    this.fs.copy(
+      this.templatePath("source/.*"),
+      this.destinationPath(this.rootPath)
     );
 
     this.success = true;
