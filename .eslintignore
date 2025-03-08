@@ -1,0 +1,3 @@
+coverage
+**/templates
+eslint-disable-next-line capitalized-comments
