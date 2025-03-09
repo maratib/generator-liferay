@@ -60,5 +60,11 @@ module.exports = {
     } catch (err) {
       console.error(err);
     }
+  },
+  dotGitIgnore: function(from) {
+    const to = from.replace("_", ".");
+    fs.rename(from, to, function(err) {
+      if (err) console.log(err);
+    });
   }
 };

@@ -26,39 +26,6 @@ module.exports = class extends Generator {
     });
   }
 
-  writing() {
-    this.resourcePath = this.rootPath + "/src/main/resources";
-    this.packagePath = this.rootPath + "/src/main/java/" + this.packagePath;
-
-    // Create java root folder
-    utils.createFolders(this.packagePath);
-    // Create bnd file
-    portlet.createBndFile(this.rootPath, this.projectName, this.packageName);
-    portlet.createLanguagePropertiesFile(
-      this.resourcePath,
-      this.portletName,
-      this.packageName
-    );
-    portlet.createViewJSP(this.resourcePath, this.portletName);
-    portlet.createPortletClass(
-      this.packagePath,
-      this.portletName,
-      this.packageName
-    );
-    portlet.createPortletConstantsClass(
-      this.packagePath,
-      this.portletName,
-      this.packageName
-    );
-
-    this.fs.copy(
-      this.templatePath("source"),
-      this.destinationPath(this.rootPath),
-      { globOptions: { dot: true } }
-    );
-    this.success = true;
-  }
-
   async prompting() {
     const answers = await this.prompt([
       {
@@ -115,8 +82,47 @@ module.exports = class extends Generator {
     }
   }
 
+  writing() {
+    this.resourcePath = this.rootPath + "/src/main/resources";
+    this.packagePath = this.rootPath + "/src/main/java/" + this.packagePath;
+
+    // Create java root folder
+    utils.createFolders(this.packagePath);
+    // Create bnd file
+    portlet.createBndFile(this.rootPath, this.projectName, this.packageName);
+    portlet.createLanguagePropertiesFile(
+      this.resourcePath,
+      this.portletName,
+      this.packageName
+    );
+    portlet.createViewJSP(this.resourcePath, this.portletName);
+    portlet.createPortletClass(
+      this.packagePath,
+      this.portletName,
+      this.packageName
+    );
+    portlet.createPortletConstantsClass(
+      this.packagePath,
+      this.portletName,
+      this.packageName
+    );
+    try {
+      this.fs.copy(
+        this.templatePath("source"),
+        this.destinationPath(this.rootPath),
+        { globOptions: { dot: true } }
+      );
+
+      this.success = true;
+    } catch (err) {
+      this.success = false;
+      console.log(err);
+    }
+  }
+
   end() {
     if (this.success) {
+      utils.dotGitIgnore(this.rootPath + "/_gitignore");
       this.log(`Project created... (${this.projectName})`);
     }
   }

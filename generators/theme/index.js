@@ -72,7 +72,7 @@ module.exports = class extends Generator {
     }
   }
 
-  writing() {
+  async writing() {
     // The ignore array is used to ignore files, push file names into this array that you want to ignore.
     const copyOpts = {
       globOptions: {
@@ -89,16 +89,12 @@ module.exports = class extends Generator {
       url: "http://localhost:8080"
     };
 
-    this.fs.copyTpl(
+    await this.fs.copyTpl(
       this.templatePath("source"),
       this.destinationPath(this.rootPath),
       opts,
-      copyOpts
-    );
-
-    this.fs.copy(
-      this.templatePath("source/.*"),
-      this.destinationPath(this.rootPath)
+      copyOpts,
+      { globOptions: { dot: true } }
     );
 
     this.success = true;
@@ -112,6 +108,7 @@ module.exports = class extends Generator {
 
   end() {
     if (this.success) {
+      utils.dotGitIgnore(this.rootPath + "/_gitignore");
       this.log(`Theme created... (${this.themeName})`);
     }
   }

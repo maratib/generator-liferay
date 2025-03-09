@@ -33,55 +33,6 @@ module.exports = class extends Generator {
     this.workspaceVersion = this.options.version;
   }
 
-  writing() {
-    // this.log(`Workspace name: ${this.workspaceName}`);
-    // this.log(`Workspace version: ${this.workspaceVersion}`);
-    // this.workspaceName = this.options.name;
-    this.workspacePath = this.destinationPath(this.workspaceName);
-    this.pathAlreadyExists = utils.resourceAlreadyExists(this.workspacePath);
-
-    if (this.pathAlreadyExists) {
-      this.log(`Workspace already exists... (${this.workspaceName})`);
-      return false;
-    }
-
-    if (!this.versions.includes(this.workspaceVersion)) {
-      this.log(
-        `Workspace version does not exists... (${this.workspaceVersion})`
-      );
-      return false;
-    }
-
-    try {
-      this.fs.copy(
-        this.templatePath("workspace"),
-        this.destinationPath(this.workspaceName),
-        { globOptions: { dot: true } }
-      );
-
-      this.fs.append(
-        this.workspacePath + "/gradle.properties",
-        `liferay.workspace.product=${this.workspaceVersion}`
-      );
-
-      // this.fs.copy(
-      //   this.templatePath("workspace/**/.*"),
-      //   this.destinationPath(this.workspaceName)
-      // );
-
-      // const filePath = this.workspacePath + "/gradle.properties";
-      // const fileContent = this.readFileAsString(filePath);
-      // this.log(filePath);
-      // this.log(fileContent);
-
-      this.writeFileFromString();
-
-      this.success = true;
-    } catch (e) {
-      this.log(e.message);
-    }
-  }
-
   async prompting() {
     const answers = await this.prompt([
       {
@@ -113,8 +64,47 @@ module.exports = class extends Generator {
     this.workspaceVersion = answers.version;
   }
 
+  async writing() {
+    // this.log(`Workspace name: ${this.workspaceName}`);
+    // this.log(`Workspace version: ${this.workspaceVersion}`);
+    // this.workspaceName = this.options.name;
+    this.workspacePath = this.destinationPath(this.workspaceName);
+    this.pathAlreadyExists = utils.resourceAlreadyExists(this.workspacePath);
+
+    if (this.pathAlreadyExists) {
+      this.log(`Workspace already exists... (${this.workspaceName})`);
+      return false;
+    }
+
+    if (!this.versions.includes(this.workspaceVersion)) {
+      this.log(
+        `Workspace version does not exists... (${this.workspaceVersion})`
+      );
+      return false;
+    }
+
+    try {
+      await this.fs.copy(
+        this.templatePath("workspace"),
+        this.destinationPath(this.workspaceName),
+        { globOptions: { dot: true } }
+      );
+
+      await this.fs.append(
+        this.workspacePath + "/gradle.properties",
+        `liferay.workspace.product=${this.workspaceVersion}`
+      );
+
+      // this.writeFileFromString();
+      this.success = true;
+    } catch (e) {
+      this.log(e.message);
+    }
+  }
+
   end() {
     if (this.success) {
+      utils.dotGitIgnore(this.workspacePath + "/_gitignore");
       this.log(`Workspace created... (${this.workspaceName})`);
     }
   }
