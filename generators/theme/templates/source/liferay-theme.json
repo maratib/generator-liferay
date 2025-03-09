@@ -1,0 +1,8 @@
+{
+    "LiferayTheme": {
+      "appServerPath": "<%= appServerPath %>",
+      "deployPath": "<%= deployPath %>",
+      "deploymentStrategy": "LocalAppServer",
+      "url": "http://localhost:8080"
+    }
+  }

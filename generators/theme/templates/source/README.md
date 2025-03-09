@@ -4,6 +4,10 @@
 ## Initial setup
 ```bash
 npm install
+npm run deploy
+# copy build/template to src/template
+npm run watch
+# start developing your theme
 ```
 
 ## Liferay theme configuration
@@ -19,5 +23,4 @@ liferay-theme.json
 }
 ```
 
-/Users/maratib/iwork/learn/liferay/server/liferay-dxp/tomcat
 
