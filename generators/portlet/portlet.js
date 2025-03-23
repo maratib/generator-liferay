@@ -10,10 +10,14 @@ const utils = require("../utils");
 ejs.delimiter = "?";
 
 module.exports = {
-  createBndFile: function(path, projectName, packageName) {
+  createBndFile: function(path, projectName, packageName, portletName) {
     utils.createFolders(path);
     path += "/bnd.bnd";
-    const fileContent = ejs.render(bnd, { projectName, packageName });
+    const fileContent = ejs.render(bnd, {
+      projectName,
+      packageName,
+      portletName
+    });
     utils.writeFile(path, fileContent);
   },
   createLanguagePropertiesFile: function(path, portletName, packageName) {

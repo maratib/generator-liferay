@@ -22,5 +22,5 @@ liferay-theme.json
   }
 }
 ```
-
+[Liferay Sample Theme](https://github.com/maratib/liferay-sample-theme)
 

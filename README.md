@@ -1,10 +1,13 @@
 # Liferay Generator
 
+Create liferay `workspaces, portlets and themes` using this `Liferay cli tool`, it will work with all the versions of `Yeoman` and meant to be easy to use.
+
+It can greatly improve the productivity of a liferay developer who is looking for light weight command line tool to scaffold the liferay projects quickly and easily.
+
 ## Installation
 
 ```bash
-npm install -g yo
-npm install -g generator-liferay
+npm install -g yo generator-liferay
 ```
 
 ## Generating new liferay workspace

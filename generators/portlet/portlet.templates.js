@@ -1,29 +1,30 @@
 module.exports = {
-	// Language
-	language: `javax.portlet.title.<?= packageGroup ?>=<?= portletName ?>
+  // Language
+  language: `javax.portlet.title.<?= packageGroup ?>=<?= portletName ?>
 <?= portletName.toLowerCase() ?>.caption=Hello from <?= portletName ?>!`,
 
-	// Bnd
-	bnd: `Bundle-Name: <?= projectName ?>
-Bundle-SymbolicName: <?= packageName ?>
+  // Bnd
+  bnd: `Bundle-Name: <?= projectName ?>
+Bundle-SymbolicName: <?= portletName ?>
 Bundle-Version: 1.0.0
 Export-Package: <?= packageName ?>.constants
 Provide-Capability:\\
 	liferay.language.resources;\\
   		resource.bundle.base.name="content.Language"`,
-	// ViewJSP
-	viewJSP: `<%@ include file="/init.jsp" %>
+  // ViewJSP
+  viewJSP: `<%@ include file="/init.jsp" %>
 
 <p>
     <b><liferay-ui:message key="<?= portletName.toLowerCase() ?>.caption"/></b>
 </p>`,
 
-	// Portlet Class
-	portlet: `package <?= packageName ?>.portlet;
+  // Portlet Class
+  portlet: `package <?= packageName ?>.portlet;
 
 import <?= packageName ?>.constants.<?= portletName ?>Keys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import javax.portlet.Portlet;
+import javax.portlet.*;
+import java.io.IOException;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -44,17 +45,24 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class <?= portletName ?> extends MVCPortlet {
+
+	@Override
+	public void doView(RenderRequest renderRequest,
+		RenderResponse renderResponse) throws IOException, PortletException {
+		System.out.println("in doView of <?= portletName ?> ");
+   		super.doView(renderRequest, renderResponse);
+	}
+
 }`,
 
-	portletConstants: `package <?= packageName ?>.constants;
+  portletConstants: `package <?= packageName ?>.constants;
 
 /**
  * @author name
  */
 public class <?= portletName ?>Keys {
 
-	public static final String <?= portletName.toUpperCase() ?> =
-		"<?= packageGroup ?>";
+	public static final String <?= portletName.toUpperCase() ?> = "<?= packageGroup ?>";
 
 }
 `

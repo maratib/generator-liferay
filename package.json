@@ -1,6 +1,6 @@
 {
   "name": "generator-liferay",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Liferay generator",
   "homepage": "https://github.com/maratib/generator-liferay",
   "author": {
@@ -23,7 +23,14 @@
     "lr workspace",
     "lr portlets",
     "lr themes",
-    "lr widgets"
+    "lr widgets",
+    "liferay cli",
+    "liferay cli tool",
+    "liferay Utility",
+    "liferay tools",
+    "workspace",
+    "portlet",
+    "theme"
   ],
   "devDependencies": {
     "eslint": "^6.6.0",

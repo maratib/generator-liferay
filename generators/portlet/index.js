@@ -89,7 +89,12 @@ module.exports = class extends Generator {
     // Create java root folder
     utils.createFolders(this.packagePath);
     // Create bnd file
-    portlet.createBndFile(this.rootPath, this.projectName, this.packageName);
+    portlet.createBndFile(
+      this.rootPath,
+      this.projectName,
+      this.packageName,
+      this.portletName
+    );
     portlet.createLanguagePropertiesFile(
       this.resourcePath,
       this.portletName,
